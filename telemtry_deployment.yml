@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telemetry
+  template:
+    metadata:
+      labels:
+        app: telemetry
+    spec:
+      containers:
+      - name: telemetry
+        image: telemetry-image:v2
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+          - name: POSTGRES_HOST
+            value: "postgress-service"
+
+          - name: POSTGRES_PORT
+            value: "5432"
+
+          - name: POSTGRES_USER
+            value: "admin"
+
+          - name: POSTGRES_PASSWORD
+            value: "admin@123"
+
+          - name: POSTGRES_DB
+            value: "axiondb"
+            
